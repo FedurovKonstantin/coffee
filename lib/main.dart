@@ -1,13 +1,17 @@
 import 'package:coffee/app/auth/auth_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coffee/app/auth/repositories/fire_auth_repository.dart';
+import 'package:coffee/app/my_observer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'app/auth/bloc/auth_bloc.dart';
 import 'app/theme/bloc/theme_bloc.dart';
 
 void main() async {
-  await FirebaseAuth.instance;
-
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  Bloc.observer = MyObserver();
   runApp(MyApp());
 }
 
@@ -16,8 +20,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThemeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(
+            authRepository: FireAuthRepository(),
+          )..add(
+              AuthStarted(),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => ThemeBloc(),
+        ),
+      ],
       child: MyAppView(),
     );
   }

@@ -11,23 +11,11 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(),
-      child: AuthView(),
-    );
-  }
-}
-
-class AuthView extends StatelessWidget {
-  const AuthView();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocBuilder<AuthBloc, AuthStates>(
       builder: (context, state) {
-        if (state is AuthAuthenticated)
+        if (state == AuthStates.Authenticated)
           return TasksPage();
-        else if (state is AuthUnauthenticated) return SignInPage();
+        else if (state == AuthStates.Unauthenticated) return SignInPage();
         return SplashScreen();
       },
     );

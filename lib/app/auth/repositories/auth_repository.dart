@@ -13,5 +13,5 @@ abstract class AuthRepository {
     required String password,
   });
 
-  Future<String> getUserId();
+  Future<String?> getUserId();
 }

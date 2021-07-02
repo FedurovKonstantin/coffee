@@ -1,12 +1,13 @@
 import 'package:coffee/app/auth/repositories/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coffee/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 
 class FireAuthRepository implements AuthRepository {
-  final instance = FirebaseAuth.instance;
+  final instance = fireAuth.FirebaseAuth.instance;
 
   @override
-  Future<String> getUserId() async {
-    return await instance.currentUser!.uid;
+  Future<String?> getUserId() async {
+    return await instance.currentUser?.uid;
   }
 
   @override
