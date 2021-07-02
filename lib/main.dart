@@ -11,7 +11,7 @@ import 'app/theme/bloc/theme_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Bloc.observer = MyObserver();
+  // Bloc.observer = MyObserver();
   runApp(MyApp());
 }
 
@@ -44,6 +44,7 @@ class MyAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: context.select((ThemeBloc bloc) => bloc.state.theme.theme),
       home: AuthPage(),
     );
   }
