@@ -26,6 +26,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthStates> {
       } else {
         yield AuthStates.Authenticated;
       }
+    } else if (event is AuthAuthenticated) {
+      yield AuthStates.Authenticated;
+    } else if (event is AuthUnauthenticated) {
+      yield AuthStates.Unauthenticated;
     }
   }
 }
